@@ -11,6 +11,7 @@ import { useAccount, useConnect, useSwitchChain, useWatchAsset } from 'wagmi';
 
 import { Web3Context } from '../hooks/useWeb3Context';
 import { getEthersProvider } from './adapters/EthersAdapter';
+import { useCaSdkAuth } from 'src/services/ca';
 
 export type ERC20TokenType = {
   address: string;
@@ -71,6 +72,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   }, [readOnlyMode]);
 
   useEffect(() => {
+    useCaSdkAuth();
     // If running cypress tests, then we try to auto connect on app load
     // so it doesn't have to be driven through the UI.
     const isCypressEnabled = process.env.NEXT_PUBLIC_IS_CYPRESS_ENABLED === 'true';
