@@ -20,7 +20,6 @@ import { useShallow } from 'zustand/shallow';
 import { GasPriceData, useGasPrice } from '../../../hooks/useGetGasPrices';
 import { FormattedNumber } from '../../primitives/FormattedNumber';
 import { GasOption } from './GasStationProvider';
-import { useBalance } from 'src/services/ca';
 import { useUnifiedBalance } from '@arcana/ca-wagmi';
 
 export interface GasStationProps {

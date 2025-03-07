@@ -11,7 +11,6 @@ import { useAccount, useConnect, useSwitchChain, useWatchAsset } from 'wagmi';
 
 import { Web3Context } from '../hooks/useWeb3Context';
 import { getEthersProvider } from './adapters/EthersAdapter';
-import { useCaSdkAuth } from 'src/services/ca';
 
 export type ERC20TokenType = {
   address: string;

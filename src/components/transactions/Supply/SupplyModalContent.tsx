@@ -53,7 +53,6 @@ import { IsolationModeWarning } from '../Warnings/IsolationModeWarning';
 import { SNXWarning } from '../Warnings/SNXWarning';
 import { SupplyActions } from './SupplyActions';
 import { SupplyWrappedTokenActions } from './SupplyWrappedTokenActions';
-import { useBalance } from 'src/services/ca';
 import { CA } from '@arcana/ca-sdk';
 import { useUnifiedBalance } from '@arcana/ca-wagmi';
 

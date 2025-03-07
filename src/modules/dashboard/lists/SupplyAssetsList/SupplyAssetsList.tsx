@@ -31,7 +31,6 @@ import { ListButtonsColumn } from '../ListButtonsColumn';
 import { ListLoader } from '../ListLoader';
 import { SupplyAssetsListItem } from './SupplyAssetsListItem';
 import { WalletEmptyInfo } from './WalletEmptyInfo';
-import { useBalance } from 'src/services/ca';
 import { useUnifiedBalance } from '@arcana/ca-wagmi';
 
 const head = [

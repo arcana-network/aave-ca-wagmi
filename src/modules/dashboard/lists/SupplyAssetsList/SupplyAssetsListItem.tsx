@@ -42,7 +42,6 @@ import { ListItemWrapper } from '../ListItemWrapper';
 import { ListMobileItemWrapper } from '../ListMobileItemWrapper';
 import { ListValueColumn } from '../ListValueColumn';
 import { ListValueRow } from '../ListValueRow';
-import { useBalance } from 'src/services/ca';
 import { CA } from '@arcana/ca-sdk';
 import { useUnifiedBalance } from '@arcana/ca-wagmi';
 
