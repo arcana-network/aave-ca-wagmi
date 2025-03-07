@@ -44,6 +44,7 @@ import { ListValueColumn } from '../ListValueColumn';
 import { ListValueRow } from '../ListValueRow';
 import { useBalance } from 'src/services/ca';
 import { CA } from '@arcana/ca-sdk';
+import { useUnifiedBalance } from '@arcana/ca-wagmi';
 
 export const SupplyAssetsListItem = (
   params: DashboardReserve & { walletBalances: WalletBalancesMap }
@@ -128,7 +129,7 @@ export const SupplyAssetsListItemDesktop = ({
     setAnchorEl(null);
   };
 
-  const caBalances = useBalance();
+  const caBalances = useUnifiedBalance().balances;
 
   const wrappedToken = wrappedTokenReserves.find(
     (r) => r.tokenOut.underlyingAsset === underlyingAsset
@@ -362,7 +363,7 @@ export const SupplyAssetsListItemMobile = ({
     (r) => r.tokenOut.underlyingAsset === underlyingAsset
   );
 
-  const caBalances = useBalance();
+  const caBalances = useUnifiedBalance().balances;
 
   return (
     <ListMobileItemWrapper

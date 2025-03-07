@@ -168,7 +168,7 @@ const useCaSdkAuth = async () => {
   // @ts-ignore
   const injectedProvider = window.ethereum;
   await initializeCA(injectedProvider).then(async () => {
-    balance = await caSDK?.getUnifiedBalances()!;
+    // balance = await caSDK?.getUnifiedBalances()!;
   });
   return caSDK;
 };

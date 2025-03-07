@@ -72,7 +72,9 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   }, [readOnlyMode]);
 
   useEffect(() => {
-    useCaSdkAuth();
+
+      // useCaSdkAuth();
+    
     // If running cypress tests, then we try to auto connect on app load
     // so it doesn't have to be driven through the UI.
     const isCypressEnabled = process.env.NEXT_PUBLIC_IS_CYPRESS_ENABLED === 'true';

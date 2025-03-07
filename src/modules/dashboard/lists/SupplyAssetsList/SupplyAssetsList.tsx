@@ -32,6 +32,7 @@ import { ListLoader } from '../ListLoader';
 import { SupplyAssetsListItem } from './SupplyAssetsListItem';
 import { WalletEmptyInfo } from './WalletEmptyInfo';
 import { useBalance } from 'src/services/ca';
+import { useUnifiedBalance } from '@arcana/ca-wagmi';
 
 const head = [
   { title: <Trans key="assets">Assets</Trans>, sortKey: 'symbol' },
@@ -168,7 +169,7 @@ export const SupplyAssetsList = () => {
   const sortedSupplyReserves = tokensToSupply.sort((a, b) =>
     +a.walletBalanceUSD > +b.walletBalanceUSD ? -1 : 1
   );
-  const caBalances = useBalance();
+  const caBalances = useUnifiedBalance().balances;
 
   const filteredSupplyReserves = sortedSupplyReserves.filter((reserve) => {
     if (CA.getSupportedChains().find((chain) => chain.id === currentChainId)) {

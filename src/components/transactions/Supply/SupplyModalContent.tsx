@@ -55,6 +55,7 @@ import { SupplyActions } from './SupplyActions';
 import { SupplyWrappedTokenActions } from './SupplyWrappedTokenActions';
 import { useBalance } from 'src/services/ca';
 import { CA } from '@arcana/ca-sdk';
+import { useUnifiedBalance } from '@arcana/ca-wagmi';
 
 export enum ErrorType {
   CAP_REACHED,
@@ -161,7 +162,7 @@ export const SupplyModalContent = React.memo(
     const supplyUnWrapped = underlyingAsset.toLowerCase() === API_ETH_MOCK_ADDRESS.toLowerCase();
 
     const walletBalance = supplyUnWrapped ? nativeBalance : tokenBalance;
-    const balances = useBalance();
+    const balances = useUnifiedBalance().balances;
     const supplyApy = poolReserve.supplyAPY;
     const { supplyCap, totalLiquidity, isFrozen, decimals, debtCeiling, isolationModeTotalDebt } =
       poolReserve;

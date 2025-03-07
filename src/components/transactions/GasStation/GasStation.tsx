@@ -21,6 +21,7 @@ import { GasPriceData, useGasPrice } from '../../../hooks/useGetGasPrices';
 import { FormattedNumber } from '../../primitives/FormattedNumber';
 import { GasOption } from './GasStationProvider';
 import { useBalance } from 'src/services/ca';
+import { useUnifiedBalance } from '@arcana/ca-wagmi';
 
 export interface GasStationProps {
   gasLimit: BigNumber;
@@ -67,7 +68,7 @@ export const GasStation: React.FC<GasStationProps> = ({
   const { data: isContractAddress } = useIsContractAddress(account);
   const nativeBalanceUSD = walletBalances[API_ETH_MOCK_ADDRESS.toLowerCase()]?.amountUSD;
   const { name, baseAssetSymbol } = getNetworkConfig(selectedChainId);
-  const unifiedBalance = useBalance()?.find(
+  const unifiedBalance = useUnifiedBalance().balances?.find(
     (balance) => balance.symbol === baseAssetSymbol
   )?.balanceInFiat;
 
