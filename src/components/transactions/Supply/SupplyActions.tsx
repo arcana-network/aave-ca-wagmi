@@ -14,10 +14,10 @@ import { ApprovalMethod } from 'src/store/walletSlice';
 import { getErrorTextFromError, TxAction } from 'src/ui-config/errorMapping';
 import { queryKeysFactory } from 'src/ui-config/queries';
 import { useShallow } from 'zustand/shallow';
-
+import Decimal from 'decimal.js';
 import { TxActionsWrapper } from '../TxActionsWrapper';
 import { APPROVAL_GAS_LIMIT, checkRequiresApproval } from '../utils';
-
+import { useCAFn, useUnifiedBalance } from "@arcana/ca-wagmi"
 export interface SupplyActionProps extends BoxProps {
   amountToSupply: string;
   isWrongNetwork: boolean;
@@ -73,9 +73,11 @@ export const SupplyActions = React.memo(
     const permitAvailable = tryPermit({ reserveAddress: poolAddress, isWrappedBaseAsset });
     const { sendTx } = useWeb3Context();
     const queryClient = useQueryClient();
+    const caBalances = useUnifiedBalance().balances;
 
     const [signatureParams, setSignatureParams] = useState<SignedParams | undefined>();
 
+    const { bridge } = useCAFn()
     const {
       data: approvedAmount,
       refetch: fetchApprovedAmount,
@@ -137,11 +139,32 @@ export const SupplyActions = React.memo(
 
     const action = async () => {
       try {
+        console.log("function started")
         setMainTxState({ ...mainTxState, loading: true });
-
+        console.log("caBalances: ", caBalances)
+        console.log("came here 1")
         let response: TransactionResponse;
+        console.log("came here 2")
         let action = ProtocolAction.default;
-
+        console.log("came here 3")
+        
+        if(
+          Number(caBalances?.find((balance) => balance.symbol === (symbol == "WETH"? "ETH": symbol))?.
+          breakdown.find((breakdown) => breakdown.chain.id === currentMarketData.chainId)?.balance)
+          < Number(amountToSupply)
+        ){
+          console.log("wallet Balance: ", caBalances?.find((balance) => balance.symbol === (symbol == "WETH"? "ETH": symbol))?.breakdown.find((breakdown) => breakdown.chain.id === currentMarketData.chainId)?.balance)
+          console.log("amount to supply: ", amountToSupply)
+          const decimalAmount = new Decimal(amountToSupply).sub(caBalances?.find((balance) => balance.symbol === (symbol == "WETH"? "ETH": symbol))?.breakdown.find((breakdown) => breakdown.chain.id === currentMarketData.chainId)?.balance!).add(symbol == "WETH" ? '': '0.00001').toString();
+          if(symbol == "WETH" || symbol == "weth"){symbol = "ETH"}
+          await bridge(
+            {
+              amount: decimalAmount,
+              token: ['USDC', 'USDT', 'ETH', 'usdc', 'usdt', 'eth'].find((token) => token === symbol) as 'USDC' | 'USDT' | 'ETH' | 'usdc' | 'usdt' | 'eth',
+              chain: currentMarketData.chainId,
+            }
+          )
+        }
         // determine if approval is signature or transaction
         // checking user preference is not sufficient because permit may be available but the user has an existing approval
         if (usePermit && signatureParams) {
@@ -155,7 +178,6 @@ export const SupplyActions = React.memo(
 
           signedSupplyWithPermitTxData = await estimateGasLimit(signedSupplyWithPermitTxData);
           response = await sendTx(signedSupplyWithPermitTxData);
-
           await response.wait(1);
         } else {
           action = ProtocolAction.supply;
