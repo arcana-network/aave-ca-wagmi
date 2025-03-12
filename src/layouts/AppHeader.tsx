@@ -28,7 +28,7 @@ import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { useRootStore } from 'src/store/root';
 import { ENABLE_TESTNET, FORK_ENABLED } from 'src/utils/marketsAndNetworksConfig';
 import { useShallow } from 'zustand/shallow';
-import { useBalance } from '@arcana/ca-wagmi';
+import { useBalanceModal } from '@arcana/ca-wagmi';
 import { Link } from '../components/primitives/Link';
 import { uiConfig } from '../uiConfig';
 import { NavItems } from './components/NavItems';
@@ -109,7 +109,7 @@ export function AppHeader() {
   const { readOnlyMode } = useWeb3Context();
   const [walletWidgetOpen, setWalletWidgetOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { showBalance } = useBalance();
+  const { showModal } = useBalanceModal();
 
   useEffect(() => {
     if (mobileDrawerOpen && !md) {
@@ -332,7 +332,7 @@ export function AppHeader() {
             sx={{ mr: 2 }}
           >
             <Button
-              onClick={() => showBalance()}
+              onClick={() => showModal()}
               variant="surface"
               sx={{ p: '7px 8px', minWidth: 'unset', gap: 2, alignItems: 'center' }}
               aria-label="Switch tool"
