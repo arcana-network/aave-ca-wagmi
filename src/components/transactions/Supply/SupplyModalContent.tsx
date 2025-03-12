@@ -241,7 +241,7 @@ export const SupplyModalContent = React.memo(
                 (chain) => chain.id === currentMarketData.chainId
               )
                 ? balances?.find(
-                    (b) => b.symbol === (poolReserve.symbol == 'WETH' ? 'ETH' : poolReserve.symbol)
+                    (b) => b.symbol === (poolReserve.symbol == 'WETH' ? 'ETH' : (poolReserve.symbol == 'USD₮0' ? 'USDT' : poolReserve.symbol))
                   )?.balance
                 : maxAmountToSupply,
               symbol: supplyUnWrapped ? currentNetworkConfig.baseAssetSymbol : poolReserve.symbol,
@@ -256,7 +256,7 @@ export const SupplyModalContent = React.memo(
           maxValue={
             CA.getSupportedChains().find((chain) => chain.id === currentMarketData.chainId)
               ? balances?.find(
-                  (b) => b.symbol === (poolReserve.symbol == 'WETH' ? 'ETH' : poolReserve.symbol)
+                  (b) => b.symbol === (poolReserve.symbol == 'WETH' ? 'ETH' : (poolReserve.symbol == 'USD₮0' ? 'USDT' : poolReserve.symbol))
                 )?.balance
               : maxAmountToSupply
           }
@@ -440,7 +440,7 @@ export const SupplyWrappedTokenModalContent = ({
         capType={CapType.supplyCap}
         isMaxSelected={isMaxSelected}
         disabled={supplyTxState.loading}
-        balanceText={<Trans>Wallet balance</Trans>}
+        balanceText={<Trans>Unified token balance</Trans>}
         event={{
           eventName: GENERAL.MAX_INPUT_SELECTION,
           eventParams: {

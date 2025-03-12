@@ -209,18 +209,18 @@ export const SupplyAssetsListItemDesktop = ({
           symbol={symbol}
           value={
             CA.getSupportedChains().find((chain) => chain.id === currentMarketData.chainId)
-              ? Number(caBalances?.find((b) => b.symbol === symbol)?.balance! || walletBalance)
+              ? Number(caBalances?.find((b) => b.symbol === (symbol == 'USD₮0' ? 'USDT':symbol))?.balance! || walletBalance)
               : walletBalance
           }
           subValue={
             CA.getSupportedChains().find((chain) => chain.id === currentMarketData.chainId)
-              ? caBalances?.find((b) => b.symbol === symbol)?.balanceInFiat || walletBalanceUSD
+              ? caBalances?.find((b) => b.symbol === (symbol == 'USD₮0' ? 'USDT':symbol))?.balanceInFiat || walletBalanceUSD
               : walletBalanceUSD
           }
           withTooltip
           disabled={
             CA.getSupportedChains().find((chain) => chain.id === currentMarketData.chainId)
-              ? Number(caBalances?.find((b) => b.symbol === symbol)?.balance! || walletBalance) ===
+              ? Number(caBalances?.find((b) => b.symbol === (symbol == 'USD₮0' ? 'USDT':symbol))?.balance! || walletBalance) ===
                   0 || isMaxCapReached
               : walletBalance === '0' || isMaxCapReached
           }
@@ -260,7 +260,7 @@ export const SupplyAssetsListItemDesktop = ({
           disabled={
             // find balance of current token from balances variavlbe
             !(CA.getSupportedChains().find((chain) => chain.id === currentMarketData.chainId)
-              ? caBalances?.find((b) => b.symbol === symbol)?.balanceInFiat! > 0
+              ? caBalances?.find((b) => b.symbol === (symbol == 'USD₮0' ? 'USDT':symbol))?.balanceInFiat! > 0
               : disableSupply)
           }
           variant="contained"
@@ -428,17 +428,17 @@ export const SupplyAssetsListItemMobile = ({
           title={<Trans>Supply balance</Trans>}
           value={
             CA.getSupportedChains().find((chain) => chain.id === currentMarketData.chainId)
-              ? Number(caBalances?.find((b) => b.symbol === symbol)?.balance || walletBalance)
+              ? Number(caBalances?.find((b) => b.symbol === (symbol == 'USD₮0' ? 'USDT':symbol))?.balance || walletBalance)
               : walletBalance
           }
           subValue={
             CA.getSupportedChains().find((chain) => chain.id === currentMarketData.chainId)
-              ? caBalances?.find((b) => b.symbol === symbol)?.balanceInFiat || walletBalanceUSD
+              ? caBalances?.find((b) => b.symbol === (symbol == 'USD₮0' ? 'USDT':symbol))?.balanceInFiat || walletBalanceUSD
               : walletBalanceUSD
           }
           disabled={
             CA.getSupportedChains().find((chain) => chain.id === currentMarketData.chainId)
-              ? Number(caBalances?.find((b) => b.symbol === symbol)?.balance || walletBalance) ===
+              ? Number(caBalances?.find((b) => b.symbol === (symbol == 'USD₮0' ? 'USDT':symbol))?.balance || walletBalance) ===
                   0 || isMaxCapReached
               : walletBalance === '0' || isMaxCapReached
           }

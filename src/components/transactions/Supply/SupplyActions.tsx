@@ -139,15 +139,12 @@ export const SupplyActions = React.memo(
 
     const action = async () => {
       try {
-        console.log("function started")
         setMainTxState({ ...mainTxState, loading: true });
-        console.log("caBalances: ", caBalances)
-        console.log("came here 1")
         let response: TransactionResponse;
-        console.log("came here 2")
         let action = ProtocolAction.default;
-        console.log("came here 3")
-        
+        if(symbol == 'USD₮0'){
+          symbol = "USDT"
+        }
         if(
           Number(caBalances?.find((balance) => balance.symbol === (symbol == "WETH"? "ETH": symbol))?.
           breakdown.find((breakdown) => breakdown.chain.id === currentMarketData.chainId)?.balance)
